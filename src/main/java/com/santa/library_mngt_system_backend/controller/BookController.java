@@ -17,40 +17,50 @@ public class BookController {
     private BookService service;
 
     @GetMapping("/books")
-    public List<Book> getBooks(){
-        return service.getBooks();
+    public ResponseEntity<List<Book>> getBooks(){
+        List<Book> books = service.getBooks();
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     @PostMapping("/books")
     public ResponseEntity<String> addBook(@RequestBody Book book){
-        System.out.println(book);
         service.addBook(book);
 
         return new ResponseEntity<>("Book added successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("/books/{isbn}")
-    public String getBooksByISBN(){
-        return "All books";
+    public ResponseEntity<Book> getBooksByISBN(@PathVariable String isbn){
+        Book book = service.getBookByISBN(isbn);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     @PutMapping("/books/{isbn}")
-    public String UpdateBooksByISBN(){
-        return "All books";
+    public ResponseEntity<String> UpdateBooksByISBN(@PathVariable String isbn,@RequestBody Book book){
+        service.updateBook(isbn,book);
+
+        return new ResponseEntity<>("Book updated successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/books/{isbn}")
-    public String DeleteBooksByISBN(){
-        return "All books";
+    public ResponseEntity<String> DeleteBooksByISBN(@PathVariable String isbn){
+        service.deleteBookByISBN(isbn);
+
+        return new ResponseEntity<>("Book successfully deleted", HttpStatus.OK);
     }
 
     @GetMapping("/books/search")
-    public String searchBooks(){
-        return "All books";
+    public ResponseEntity<Book> searchBooks(@RequestParam String title, @RequestParam String author, @RequestParam String category){
+        Book book = service.findBook(title, author, category);
+
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     @GetMapping("/books/available")
-    public String getAvailableBooks(){
-        return "All books";
+    public ResponseEntity<List<Book>> getAvailableBooks(){
+        List<Book> books = service.getAvailableBooks();
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 }
