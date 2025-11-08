@@ -24,3 +24,9 @@ hs_err_pid*
 replay_pid*
 projectNotesV1.txt
 projectNotesV2.txt
+
+#target folder
+/target/
+
+#.idea folder
+/.idea/
