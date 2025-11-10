@@ -1,5 +1,6 @@
 package com.santa.library_mngt_system_backend.service;
 
+import com.santa.library_mngt_system_backend.dto.BookDTO;
 import com.santa.library_mngt_system_backend.model.Book;
 import com.santa.library_mngt_system_backend.repo.BookRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -14,8 +16,11 @@ public class BookService {
     @Autowired
     private BookRepo repo;
 
-    public List<Book> getBooks() {
-        return repo.findAll();
+    public List<BookDTO> getBooks() {
+        return repo.findAll()
+                .stream()
+                .map(BookDTO::new)
+                .collect(Collectors.toList());
     }
 
     public void addBook(Book book) {

@@ -1,5 +1,6 @@
 package com.santa.library_mngt_system_backend.controller;
 
+import com.santa.library_mngt_system_backend.dto.BookDTO;
 import com.santa.library_mngt_system_backend.model.Book;
 import com.santa.library_mngt_system_backend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class BookController {
     private BookService service;
 
     @GetMapping("/books")
-    public ResponseEntity<List<Book>> getBooks(){
-        List<Book> books = service.getBooks();
+    public ResponseEntity<List<BookDTO>> getBooks(){
+        List<BookDTO> books = service.getBooks();
 
         return new ResponseEntity<>(books, HttpStatus.OK);
     }

@@ -1,5 +1,6 @@
 package com.santa.library_mngt_system_backend.service;
 
+import com.santa.library_mngt_system_backend.dto.MemberDTO;
 import com.santa.library_mngt_system_backend.model.Member;
 import com.santa.library_mngt_system_backend.model.Transaction;
 import com.santa.library_mngt_system_backend.repo.MemberRepo;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -14,8 +16,11 @@ public class MemberService {
     @Autowired
     private MemberRepo repo;
 
-    public List<Member> getAllMembers() {
-        return repo.findAll();
+    public List<MemberDTO> getAllMembers() {
+        return repo.findAll()
+                .stream()
+                .map(MemberDTO::new)
+                .collect(Collectors.toList());
     }
 
     public void addMember(Member member) {

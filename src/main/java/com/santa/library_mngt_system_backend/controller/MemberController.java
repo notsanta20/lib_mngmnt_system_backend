@@ -1,5 +1,6 @@
 package com.santa.library_mngt_system_backend.controller;
 
+import com.santa.library_mngt_system_backend.dto.MemberDTO;
 import com.santa.library_mngt_system_backend.model.Member;
 import com.santa.library_mngt_system_backend.model.Transaction;
 import com.santa.library_mngt_system_backend.repo.MemberRepo;
@@ -20,8 +21,8 @@ public class MemberController {
     private MemberService service;
 
     @GetMapping("/members")
-    public ResponseEntity<List<Member>> getAllMembers(){
-        List<Member> membersList = service.getAllMembers();
+    public ResponseEntity<List<MemberDTO>> getAllMembers(){
+        List<MemberDTO> membersList = service.getAllMembers();
 
         return new ResponseEntity<>(membersList, HttpStatus.OK);
     }
