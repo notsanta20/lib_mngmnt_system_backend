@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class IssueBookDTO {
     private long memberId;
-    private Book book;
+    private long bookId;
 }
