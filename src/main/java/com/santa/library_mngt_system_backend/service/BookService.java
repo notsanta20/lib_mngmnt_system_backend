@@ -4,11 +4,13 @@ import com.santa.library_mngt_system_backend.dto.BookDTO;
 import com.santa.library_mngt_system_backend.model.Book;
 import com.santa.library_mngt_system_backend.repo.BookRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -16,23 +18,25 @@ public class BookService {
     @Autowired
     private BookRepo repo;
 
-    public List<BookDTO> getBooks() {
-        return repo.findAll()
-                .stream()
-                .map(BookDTO::new)
-                .collect(Collectors.toList());
+    public Page<BookDTO> getBooks(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> bookPage = repo.findAll(pageable);
+
+        return bookPage.map(BookDTO::new);
     }
 
     public void addBook(Book book) {
         repo.save(book);
     }
 
-    public Book getBookByISBN(String isbn) {
-        return repo.findByIsbn(isbn);
+    public BookDTO getBookByISBN(String isbn) {
+        Book book = repo.findByIsbn(isbn);
+
+        return new BookDTO(book);
     }
 
     public void updateBook(String isbn ,Book book) {
-        Book result = getBookByISBN(isbn);
+        Book result = repo.findByIsbn(isbn);
 
         result.setIsbn(book.getIsbn());
         result.setTitle(book.getTitle());
@@ -46,17 +50,19 @@ public class BookService {
     }
 
     public void deleteBookByISBN(String isbn) {
-        Book deletedBook = getBookByISBN(isbn);
+        Book deletedBook =  repo.findByIsbn(isbn);
         repo.delete(deletedBook);
     }
 
-    public Book findBook(String title, String author, String category) {
-        return repo.findBook(title, author, category);
+    public BookDTO findBook(String title, String author, String category) {
+        Book book = repo.findBook(title, author, category);
+        return new BookDTO(book);
     }
 
-    public List<Book> getAvailableBooks() {
-        List<Book> books = repo.findAllAvailableBooks();
-
-        return books;
+    public List<BookDTO> getAvailableBooks() {
+        return repo.findAllAvailableBooks()
+                .stream()
+                .map(BookDTO::new)
+                .toList();
     }
 }
