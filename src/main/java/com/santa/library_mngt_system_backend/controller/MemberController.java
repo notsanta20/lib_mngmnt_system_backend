@@ -1,6 +1,7 @@
 package com.santa.library_mngt_system_backend.controller;
 
 import com.santa.library_mngt_system_backend.dto.MemberDTO;
+import com.santa.library_mngt_system_backend.dto.TransactionDTO;
 import com.santa.library_mngt_system_backend.model.Member;
 import com.santa.library_mngt_system_backend.model.Transaction;
 import com.santa.library_mngt_system_backend.repo.MemberRepo;
@@ -35,8 +36,8 @@ public class MemberController {
     }
 
     @GetMapping("/members/{id}")
-    public ResponseEntity<Member> getMemberById(@PathVariable long id){
-        Member member = service.getMemberById(id);
+    public ResponseEntity<MemberDTO> getMemberById(@PathVariable long id){
+        MemberDTO member = service.getMemberById(id);
 
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
@@ -56,8 +57,8 @@ public class MemberController {
     }
 
     @GetMapping("/members/{id}/history")
-    public ResponseEntity<List<Transaction>> getMemberHistoryById(@PathVariable long id){
-        List<Transaction> memberHistory = service.getMemberHistoryById(id);
+    public ResponseEntity<List<TransactionDTO>> getMemberHistoryById(@PathVariable long id){
+        List<TransactionDTO> memberHistory = service.getMemberHistoryById(id);
 
         return new ResponseEntity<>(memberHistory, HttpStatus.OK);
     }

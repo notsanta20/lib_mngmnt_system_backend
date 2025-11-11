@@ -1,14 +1,14 @@
 package com.santa.library_mngt_system_backend.service;
 
 import com.santa.library_mngt_system_backend.dto.MemberDTO;
+import com.santa.library_mngt_system_backend.dto.TransactionDTO;
+import com.santa.library_mngt_system_backend.exception.MemberNotFoundException;
 import com.santa.library_mngt_system_backend.model.Member;
-import com.santa.library_mngt_system_backend.model.Transaction;
 import com.santa.library_mngt_system_backend.repo.MemberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -20,20 +20,21 @@ public class MemberService {
         return repo.findAll()
                 .stream()
                 .map(MemberDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void addMember(Member member) {
         repo.save(member);
     }
 
-    public Member getMemberById(long id) {
-        return repo.findById(id).orElse(new Member());
+    public MemberDTO getMemberById(long id) {
+        Member member = repo.findById(id).orElseThrow(()->new MemberNotFoundException(id));
+        return new MemberDTO(member);
     }
 
     public void updateMemberById(long id, Member member) {
-        Member updateMember = getMemberById(id);
-        System.out.println(updateMember);
+        Member updateMember = repo.findById(id).orElseThrow(()->new MemberNotFoundException(id));
+
         updateMember.setName(member.getName());
         updateMember.setEmail(member.getEmail());
         updateMember.setPhone(member.getPhone());
@@ -50,9 +51,12 @@ public class MemberService {
         repo.deleteById(id);
     }
 
-    public List<Transaction> getMemberHistoryById(long id) {
-        Member member = repo.findById(id).orElse(new Member());
+    public List<TransactionDTO> getMemberHistoryById(long id) {
+        Member member = repo.findById(id).orElseThrow(()->new MemberNotFoundException(id));
 
-        return member.getTransactions();
+        return member.getTransactions()
+                .stream()
+                .map(TransactionDTO::new)
+                .toList();
     }
 }
