@@ -12,6 +12,7 @@ public class TransactionDTO {
     private long id;
     private LocalDate issueDate;
     private LocalDate dueDate;
+    private LocalDate returnDate;
     private double fineAmount;
     private TransactionStatus status;
     private long memberId;
@@ -21,6 +22,7 @@ public class TransactionDTO {
         this.id = transaction.getId();
         this.issueDate = transaction.getIssueDate();
         this.dueDate = transaction.getDueDate();
+        this.returnDate = transaction.getReturnDate();
         this.fineAmount = transaction.getFineAmount();
         this.status = transaction.getStatus();
         this.memberId = transaction.getMember().getId();
