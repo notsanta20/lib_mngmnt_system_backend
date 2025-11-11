@@ -15,6 +15,6 @@ public interface BookRepo extends JpaRepository<Book, Long> {
     @Query("SELECT b FROM Book b WHERE LOWER(b.title) = LOWER(:title) AND LOWER(b.author) = LOWER(:author) AND LOWER(b.category) = LOWER(:category)")
     public Book findBook(@Param("title") String title, @Param("author") String author, @Param("category") String category);
 
-    @Query("SELECT b FROM Book b WHERE b.availableCopies > 1")
+    @Query("SELECT b FROM Book b WHERE b.availableCopies > 0")
     public List<Book> findAllAvailableBooks();
 }
