@@ -30,3 +30,5 @@ projectNotesV2.txt
 
 #.idea folder
 /.idea/
+
+/src/main/resources/data.sql
