@@ -2,7 +2,6 @@ package com.santa.library_mngt_system_backend.controller;
 
 import com.santa.library_mngt_system_backend.dto.IssueBookDTO;
 import com.santa.library_mngt_system_backend.dto.TransactionDTO;
-import com.santa.library_mngt_system_backend.model.Transaction;
 import com.santa.library_mngt_system_backend.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,16 +19,16 @@ public class TransactionController {
 
     @PostMapping("/transactions/issue")
     public ResponseEntity<String> issueBook(@RequestBody IssueBookDTO issueBookDTO){
-        service.issueBook(issueBookDTO.getMemberId(), issueBookDTO.getBook());
+        service.issueBook(issueBookDTO.getMemberId(), issueBookDTO.getBookId());
 
         return new ResponseEntity<>("Book issued successfully", HttpStatus.OK);
     }
 
     @PostMapping("/transactions/return")
-    public ResponseEntity<Transaction> returnBook(@RequestBody long transactionId){
-        Transaction transaction = service.returnBook(transactionId);
+    public ResponseEntity<String> returnBook(@RequestBody long transactionId){
+        service.returnBook(transactionId);
 
-        return new ResponseEntity<>(transaction, HttpStatus.OK);
+        return new ResponseEntity<>("Book returned", HttpStatus.OK);
     }
 
     @GetMapping("/transactions")
