@@ -1,6 +1,7 @@
 package com.santa.library_mngt_system_backend.dto;
 
 import com.santa.library_mngt_system_backend.model.Book;
+import com.santa.library_mngt_system_backend.model.Transaction;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -29,7 +30,7 @@ public class BookDTO {
         this.price = book.getPrice();
         this.transactionIds = book.getTransactions()
                 .stream()
-                .map(t->t.getId())
+                .map(Transaction::getId)
                 .collect(Collectors.toList());
     }
 }
