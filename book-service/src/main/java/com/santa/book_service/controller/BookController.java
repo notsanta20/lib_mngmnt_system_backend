@@ -25,13 +25,6 @@ public class BookController {
         return service.getBooks(page, size);
     }
 
-    @GetMapping("/books/{id}")
-    public ResponseEntity<BookDTO> getBooks(@PathVariable long id){
-        BookDTO book = service.getBooksById(id);
-
-        return new ResponseEntity<>(book, HttpStatus.FOUND);
-    }
-
     @PostMapping("/books")
     public ResponseEntity<String> addBook(@RequestBody Book book){
         service.addBook(book);
@@ -41,6 +34,7 @@ public class BookController {
 
     @GetMapping("/books/{isbn}")
     public ResponseEntity<BookDTO> getBooksByISBN(@PathVariable String isbn){
+        System.out.println("Reach");
         BookDTO book = service.getBookByISBN(isbn);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
