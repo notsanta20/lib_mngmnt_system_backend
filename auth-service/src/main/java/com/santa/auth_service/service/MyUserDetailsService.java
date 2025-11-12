@@ -1,4 +1,4 @@
-package com.santa.auth_service.security;
+package com.santa.auth_service.service;
 
 import com.santa.auth_service.model.User;
 import com.santa.auth_service.model.UserPrincipal;
