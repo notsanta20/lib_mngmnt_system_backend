@@ -74,15 +74,6 @@ docker-compose down
 
 ---
 
-## 🔗 API Overview
-
-| Method | Path          | Description   |
-|--------|---------------|---------------|
-| POST   | /api/register | register user |
-| POST    | /api/login    | login user    |
-
-
-
 
 
 
