@@ -24,24 +24,18 @@ public class BookService {
         return bookPage.map(BookDTO::new);
     }
 
-    public BookDTO getBooksById(long id) {
-        Book book = repo.findById(id).orElseThrow(()-> new BookNotFoundException(id));
-
-        return new BookDTO(book);
-    }
-
     public void addBook(Book book) {
         repo.save(book);
     }
 
     public BookDTO getBookByISBN(String isbn) {
-        Book book = repo.findByIsbn(isbn);
+        Book book = repo.findByIsbn(isbn).orElseThrow(()->new BookNotFoundException(isbn));
 
         return new BookDTO(book);
     }
 
     public void updateBook(String isbn ,Book book) {
-        Book result = repo.findByIsbn(isbn);
+        Book result = repo.findByIsbn(isbn).orElseThrow(()->new BookNotFoundException(isbn));
 
         result.setIsbn(book.getIsbn());
         result.setTitle(book.getTitle());
@@ -55,12 +49,12 @@ public class BookService {
     }
 
     public void deleteBookByISBN(String isbn) {
-        Book deletedBook =  repo.findByIsbn(isbn);
+        Book deletedBook =  repo.findByIsbn(isbn).orElseThrow(()->new BookNotFoundException(isbn));
         repo.delete(deletedBook);
     }
 
     public BookDTO findBook(String title, String author, String category) {
-        Book book = repo.findBook(title, author, category);
+        Book book = repo.findBook(title, author, category).orElseThrow(()->new BookNotFoundException(""));
         return new BookDTO(book);
     }
 
