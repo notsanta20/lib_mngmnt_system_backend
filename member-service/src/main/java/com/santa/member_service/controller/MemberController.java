@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/members")
 public class MemberController {
 
     @Autowired
     private MemberService service;
 
-    @GetMapping("/members")
+    @GetMapping("/")
     public Page<Member> getAllMembers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
@@ -27,42 +27,42 @@ public class MemberController {
         return service.getAllMembers(page, size);
     }
 
-    @PostMapping("/members")
+    @PostMapping("/")
     public ResponseEntity<Member> addMember(@RequestBody Member member){
         Member registerMember = service.addMember(member);
 
         return new ResponseEntity<>(registerMember, HttpStatus.OK);
     }
 
-    @GetMapping("/members/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Member> getMemberById(@PathVariable long id){
         Member member = service.getMemberById(id);
 
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
-    @PutMapping("/members/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateMemberById(@PathVariable long id, @RequestBody Member member){
         service.updateMemberById(id, member);
 
         return new ResponseEntity<>("Member updated successfully", HttpStatus.OK);
     }
 
-    @DeleteMapping("/members/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteMemberById(@PathVariable long id){
         service.deleteMemberById(id);
 
         return new ResponseEntity<>("Member deleted successfully", HttpStatus.OK);
     }
 
-    @PutMapping("/members/{id}/fine")
+    @PutMapping("/{id}/fine")
     public ResponseEntity<String> updateMemberFine(@PathVariable long id, @RequestBody double fine){
         service.updateMemberFine(id, fine);
 
         return new ResponseEntity<>("Member updated successfully", HttpStatus.OK);
     }
 
-    @GetMapping("/members/{id}/history")
+    @GetMapping("/{id}/history")
     public Page<TransactionDTO> getMemberHistoryById(
             @PathVariable long id,
             @RequestParam(defaultValue = "0") int page,

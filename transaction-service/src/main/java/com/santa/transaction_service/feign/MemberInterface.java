@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient("MEMBER-SERVICE")
 public interface MemberInterface {
 
-    @GetMapping("/members/{id}")
+    @GetMapping("api/members/{id}")
     public ResponseEntity<MemberDTO> getMemberById(@PathVariable long id);
 
-    @PutMapping("/members/{id}/fine")
+    @PutMapping("api/members/{id}/fine")
     public ResponseEntity<String> updateMemberFine(@PathVariable long id, @RequestBody double fine);
 }

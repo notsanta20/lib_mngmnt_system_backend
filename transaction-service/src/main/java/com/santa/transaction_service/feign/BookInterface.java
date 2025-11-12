@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient("BOOK-SERVICE")
 public interface BookInterface {
-    @GetMapping("/books/{id}")
+    @GetMapping("api/books/{id}")
     public ResponseEntity<BookDTO> getBooks(@PathVariable long id);
 }

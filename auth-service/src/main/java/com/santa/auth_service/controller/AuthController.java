@@ -11,7 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> getUsers(@RequestBody UserRegisterDTO user){
+    public ResponseEntity<UserDTO> getUsers(@RequestBody UserRegisterDTO user) {
         UserDTO newUser = service.registerUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }

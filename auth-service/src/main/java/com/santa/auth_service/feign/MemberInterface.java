@@ -1,13 +1,14 @@
 package com.santa.auth_service.feign;
 
-import com.santa.auth_service.dto.MemberDTO;
+import com.santa.auth_service.model.Member;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-
+@FeignClient("MEMBER-SERVICE")
 public interface MemberInterface {
-    @GetMapping("/members/{id}")
-    public ResponseEntity<MemberDTO> getMemberById(@PathVariable long id);
+    @PostMapping("api/members/")
+    ResponseEntity<Member> addMember(@RequestBody Member member);
 
 }

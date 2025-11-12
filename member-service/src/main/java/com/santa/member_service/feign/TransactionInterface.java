@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient("TRANSACTION-SERVICE")
 public interface TransactionInterface {
-    @GetMapping("/transactions/history/{memberId}")
+    @GetMapping("api/transactions/history/{memberId}")
     Page<TransactionDTO> getMemberHistoryByMemberId(
             @PathVariable long memberId,
             @RequestParam(defaultValue = "0") int page,

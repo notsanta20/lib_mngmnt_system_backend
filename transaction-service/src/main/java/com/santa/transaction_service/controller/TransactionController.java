@@ -12,41 +12,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/transactions")
 public class TransactionController {
 
     @Autowired
     private TransactionService service;
 
-    @PostMapping("/transactions/issue")
+    @PostMapping("/issue")
     public ResponseEntity<String> issueBook(@RequestBody IssueBookDTO issueBookDTO){
         service.issueBook(issueBookDTO.getMemberId(), issueBookDTO.getBookId());
 
         return new ResponseEntity<>("Book issued successfully", HttpStatus.OK);
     }
 
-    @PostMapping("/transactions/return")
+    @PostMapping("/return")
     public ResponseEntity<String> returnBook(@RequestBody long transactionId){
         service.returnBook(transactionId);
 
         return new ResponseEntity<>("Book returned", HttpStatus.OK);
     }
 
-    @GetMapping("/transactions")
+    @GetMapping("/")
     public ResponseEntity<List<TransactionDTO>> getAllTransactions(){
         List<TransactionDTO> transactions = service.getAllTransactions();
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
-    @GetMapping("/transactions/overdue")
+    @GetMapping("/overdue")
     public ResponseEntity<List<TransactionDTO>> getOverdueBooks(){
         List<TransactionDTO> overdueTransactions = service.getOverdueTransactions();
 
         return new ResponseEntity<>(overdueTransactions, HttpStatus.OK);
     }
 
-    @GetMapping("/transactions/history/{memberId}")
+    @GetMapping("/history/{memberId}")
     public Page<TransactionDTO> getMemberHistoryByMemberId(
             @PathVariable long memberId,
             @RequestParam(defaultValue = "0") int page,

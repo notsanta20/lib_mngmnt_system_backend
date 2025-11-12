@@ -11,13 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/books")
 public class BookController {
 
     @Autowired
     private BookService service;
 
-    @GetMapping("/books")
+    @GetMapping("/")
     public Page<BookDTO> getBooks(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
@@ -25,42 +25,42 @@ public class BookController {
         return service.getBooks(page, size);
     }
 
-    @PostMapping("/books")
+    @PostMapping("/")
     public ResponseEntity<String> addBook(@RequestBody Book book){
         service.addBook(book);
 
         return new ResponseEntity<>("Book added successfully", HttpStatus.CREATED);
     }
 
-    @GetMapping("/books/{isbn}")
+    @GetMapping("/{isbn}")
     public ResponseEntity<BookDTO> getBooksByISBN(@PathVariable String isbn){
         System.out.println("Reach");
         BookDTO book = service.getBookByISBN(isbn);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @PutMapping("/books/{isbn}")
+    @PutMapping("/{isbn}")
     public ResponseEntity<String> UpdateBooksByISBN(@PathVariable String isbn,@RequestBody Book book){
         service.updateBook(isbn,book);
 
         return new ResponseEntity<>("Book updated successfully", HttpStatus.OK);
     }
 
-    @DeleteMapping("/books/{isbn}")
+    @DeleteMapping("/{isbn}")
     public ResponseEntity<String> DeleteBooksByISBN(@PathVariable String isbn){
         service.deleteBookByISBN(isbn);
 
         return new ResponseEntity<>("Book successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/books/search")
+    @GetMapping("/search")
     public ResponseEntity<BookDTO> searchBooks(@RequestParam String title, @RequestParam String author, @RequestParam String category){
         BookDTO book = service.findBook(title, author, category);
 
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @GetMapping("/books/available")
+    @GetMapping("/available")
     public Page<BookDTO> getAvailableBooks(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
