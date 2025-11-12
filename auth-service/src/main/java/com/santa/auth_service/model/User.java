@@ -18,7 +18,6 @@ public class User {
     private long id;
     @Column(unique = true)
     private String username;
-    private String hash;
+    private String password;
     private long memberId;
-
 }
