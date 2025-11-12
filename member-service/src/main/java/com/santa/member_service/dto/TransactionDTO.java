@@ -1,6 +1,5 @@
 package com.santa.member_service.dto;
 
-import com.santa.member_service.model.Transaction;
 import com.santa.member_service.model.TransactionStatus;
 import lombok.Data;
 
@@ -16,16 +15,4 @@ public class TransactionDTO {
     private TransactionStatus status;
     private long memberId;
     private long bookId;
-
-    public TransactionDTO(Transaction transaction){
-        this.id = transaction.getId();
-        this.issueDate = transaction.getIssueDate();
-        this.dueDate = transaction.getDueDate();
-        this.returnDate = transaction.getReturnDate();
-        this.fineAmount = transaction.getFineAmount();
-        this.status = transaction.getStatus();
-        this.memberId = transaction.getMember().getId();
-        this.bookId = transaction.getBook().getId();
-    }
-
 }
