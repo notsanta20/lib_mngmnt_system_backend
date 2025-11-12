@@ -7,8 +7,8 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://postgres:5432/auth-service
-    url: jdbc:postgresql://localhost:5432/lib_mngmnt
+    url: jdbc:postgresql://postgres:5432/auth-service
+#    url: jdbc:postgresql://localhost:5432/lib_mngmnt
     username: santhosh
     password: saiviyan
 
