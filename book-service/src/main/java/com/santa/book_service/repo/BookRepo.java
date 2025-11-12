@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepo extends JpaRepository<Book, Long> {
-    public Book findByIsbn(String isbn);
+    Optional<Book> findByIsbn(String isbn);
 
     @Query("SELECT b FROM Book b WHERE LOWER(b.title) = LOWER(:title) AND LOWER(b.author) = LOWER(:author) AND LOWER(b.category) = LOWER(:category)")
-    public Book findBook(@Param("title") String title, @Param("author") String author, @Param("category") String category);
+    Optional<Book>  findBook(@Param("title") String title, @Param("author") String author, @Param("category") String category);
 
     @Query("SELECT b FROM Book b WHERE b.availableCopies > 0")
     Page<Book> findAllByAvailableCopies(Pageable pageable);
