@@ -11,6 +11,28 @@ spring:
           discovery:
             locator:
               enabled: true
+      routes:
+        - id: book-service
+          uri: lb://BOOK-SERVICE
+          predicates:
+            - Path=/api/books/**
+
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
+          predicates:
+            - Path=/api/members/**
+
+        - id: transaction-service
+          uri: lb://TRANSACTION-SERVICE
+          predicates:
+            - Path=/api/transactions/**
+
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/auth/**
+
+
 
 eureka:
   client:
