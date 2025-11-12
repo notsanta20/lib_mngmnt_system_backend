@@ -53,17 +53,11 @@ The system is **fully containerized using Docker** and uses **PostgreSQL** as th
 
 ### 2️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/library-management-system.git
-cd library-management-system
+git clone https://github.com/notsanta20/lib_mngmnt_system_backend.git
+cd lib_mngmnt_system_backend
 ```
 
-### 3️⃣ Build All Services
-```bash
-git clone https://github.com/your-username/library-management-system.git
-cd library-management-system
-```
-
-### 4️⃣ Run with Docker Compose
+### 3️⃣ Build and run with Docker Compose
 ```bash
 docker-compose up --build
 ```
