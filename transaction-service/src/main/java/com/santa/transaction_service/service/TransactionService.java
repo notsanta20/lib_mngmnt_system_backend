@@ -10,6 +10,9 @@ import com.santa.transaction_service.model.Transaction;
 import com.santa.transaction_service.model.TransactionStatus;
 import com.santa.transaction_service.repo.TransactionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -76,5 +79,12 @@ public class TransactionService {
                 .filter(t-> t.getReturnDate() == null && t.getDueDate().isBefore(LocalDate.now()))
                 .map(TransactionDTO::new)
                 .toList();
+    }
+
+    public Page<TransactionDTO> getMemberHistoryByMemberId(long memberId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Transaction> transactionsPage = repo.findByMemberId(memberId, pageable);
+
+        return transactionsPage.map(TransactionDTO::new);
     }
 }

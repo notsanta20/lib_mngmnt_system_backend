@@ -4,6 +4,7 @@ import com.santa.transaction_service.dto.IssueBookDTO;
 import com.santa.transaction_service.dto.TransactionDTO;
 import com.santa.transaction_service.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,14 @@ public class TransactionController {
         List<TransactionDTO> overdueTransactions = service.getOverdueTransactions();
 
         return new ResponseEntity<>(overdueTransactions, HttpStatus.OK);
+    }
+
+    @GetMapping("/transactions/history/{memberId}")
+    public Page<TransactionDTO> getMemberHistoryByMemberId(
+            @PathVariable long memberId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        return service.getMemberHistoryByMemberId(memberId, page, size);
     }
 }
