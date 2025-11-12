@@ -7,6 +7,7 @@ import com.santa.auth_service.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,9 @@ public class AuthController {
     @Autowired
     private AuthService service;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
     @PostMapping("/register")
     public ResponseEntity<UserDTO> getUsers(@RequestBody UserRegisterDTO user){
         UserDTO newUser = service.registerUser(user);
@@ -24,7 +28,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> getUserByUsername(@RequestBody UserLoginDTO user){
+        String token = service.loginUser(user);
 
-        return new ResponseEntity<>("logged in", HttpStatus.OK);
+        if(token.equals("false")){
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }else {
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        }
     }
 }
