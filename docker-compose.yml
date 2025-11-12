@@ -4,16 +4,10 @@ services:
     environment:
       POSTGRES_USER: santhosh
       POSTGRES_PASSWORD: saiviyan
-      POSTGRES_DB: book-service
     ports:
       - "5433:5432"
-    networks:
-      - lib-network
-
-  api-gateway:
-    build: api-gateway/
-    ports:
-      - "8765:8765"
+    volumes:
+      - ./:/docker-entrypoint-initdb.d
     networks:
       - lib-network
 
@@ -24,6 +18,13 @@ services:
     networks:
       - lib-network
 
+  api-gateway:
+    build: api-gateway/
+    ports:
+      - "8765:8765"
+    networks:
+      - lib-network
+
   book-service:
     build: book-service/
     ports:
@@ -31,26 +32,26 @@ services:
     networks:
       - lib-network
 
-#  member-service:
-#    build: member-service/
-#    ports:
-#      - "8082:8082"
-#    networks:
-#      - lib-network
-#
-#  transaction-service:
-#    build: transaction-service/
-#    ports:
-#      - "8083:8083"
-#    networks:
-#      - lib-network
-#
-#  auth-service:
-#    build: auth-service/
-#    ports:
-#      - "8084:8084"
-#    networks:
-#      - lib-network
+  member-service:
+    build: member-service/
+    ports:
+      - "8082:8082"
+    networks:
+      - lib-network
+
+  transaction-service:
+    build: transaction-service/
+    ports:
+      - "8083:8083"
+    networks:
+      - lib-network
+
+  auth-service:
+    build: auth-service/
+    ports:
+      - "8084:8084"
+    networks:
+      - lib-network
 
 networks:
   lib-network:
