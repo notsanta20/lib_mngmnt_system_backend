@@ -1,14 +1,16 @@
 package com.santa.auth_service.service;
 
+import com.santa.auth_service.dto.MemberDTO;
 import com.santa.auth_service.dto.UserDTO;
 import com.santa.auth_service.dto.UserLoginDTO;
 import com.santa.auth_service.dto.UserRegisterDTO;
 import com.santa.auth_service.exception.UserAlreadyExistsException;
+import com.santa.auth_service.exception.UserRegisterException;
+import com.santa.auth_service.feign.MemberInterface;
 import com.santa.auth_service.model.Member;
 import com.santa.auth_service.model.User;
 import com.santa.auth_service.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,16 +24,21 @@ import java.util.Optional;
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserRepo repo;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Autowired
+    private UserRepo repo;
+
+    @Autowired
     AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtService jwtService;
 
-    public UserDTO registerUser(UserRegisterDTO user){
+    @Autowired
+    private MemberInterface memberInterface;
+
+    public UserDTO registerUser(UserRegisterDTO user) {
         Optional<User> checkUser = repo.findByUsername(user.getUsername());
 
         if(checkUser.isPresent()){
@@ -49,9 +56,16 @@ public class AuthService {
                 .isActive(true)
                 .build();
 
+        ResponseEntity<Member> newMember = memberInterface.addMember(member);
+
+        if(newMember.getBody() == null){
+            throw new UserRegisterException();
+        }
+
         User newUser = User.builder()
                 .username(user.getUsername())
                 .password(encoder.encode(user.getPassword()))
+                .memberId(newMember.getBody().getId())
                 .build();
 
         User registeredUser = repo.save(newUser);
