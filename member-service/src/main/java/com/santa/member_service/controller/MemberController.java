@@ -1,7 +1,6 @@
 package com.santa.member_service.controller;
 
 
-import com.santa.member_service.dto.MemberDTO;
 import com.santa.member_service.dto.TransactionDTO;
 import com.santa.member_service.model.Member;
 import com.santa.member_service.service.MemberService;
@@ -21,7 +20,7 @@ public class MemberController {
     private MemberService service;
 
     @GetMapping("/members")
-    public Page<MemberDTO> getAllMembers(
+    public Page<Member> getAllMembers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ){
@@ -29,15 +28,15 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public ResponseEntity<MemberDTO> addMember(@RequestBody Member member){
-        MemberDTO registerMember = service.addMember(member);
+    public ResponseEntity<Member> addMember(@RequestBody Member member){
+        Member registerMember = service.addMember(member);
 
         return new ResponseEntity<>(registerMember, HttpStatus.OK);
     }
 
     @GetMapping("/members/{id}")
-    public ResponseEntity<MemberDTO> getMemberById(@PathVariable long id){
-        MemberDTO member = service.getMemberById(id);
+    public ResponseEntity<Member> getMemberById(@PathVariable long id){
+        Member member = service.getMemberById(id);
 
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
@@ -63,10 +62,12 @@ public class MemberController {
         return new ResponseEntity<>("Member updated successfully", HttpStatus.OK);
     }
 
-//    @GetMapping("/members/{id}/history")
-//    public ResponseEntity<List<TransactionDTO>> getMemberHistoryById(@PathVariable long id){
-//        List<TransactionDTO> memberHistory = service.getMemberHistoryById(id);
-//
-//        return new ResponseEntity<>(memberHistory, HttpStatus.OK);
-//    }
+    @GetMapping("/members/{id}/history")
+    public Page<TransactionDTO> getMemberHistoryById(
+            @PathVariable long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        return service.getMemberHistoryById(id, page, size);
+    }
 }
