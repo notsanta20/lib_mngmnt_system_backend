@@ -3,6 +3,7 @@ package com.santa.auth_service.advice;
 import com.santa.auth_service.exception.UserAlreadyExistsException;
 import com.santa.auth_service.exception.UserNotFoundException;
 import com.santa.auth_service.exception.ErrorResponse;
+import com.santa.auth_service.exception.UserRegisterException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +19,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleUserAlreadyExists(UserAlreadyExistsException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserRegisterException.class)
+    public ResponseEntity<ErrorResponse> handleUserRegistration(UserRegisterException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
