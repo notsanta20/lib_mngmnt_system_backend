@@ -41,9 +41,7 @@ spring:
           filters:
             - AuthenticationFilter
 
-
-
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://host.docker.internal:8761/eureka/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://host.docker.internal:8761/eureka/
