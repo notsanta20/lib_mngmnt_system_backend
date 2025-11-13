@@ -94,4 +94,9 @@ public class MemberServiceTest {
         verify(memberRepo, times(1)).findById(2L);
         verify(memberRepo, times(1)).save(mockMember2);
     }
+
+    //tested on transactions service
+    void shouldGetMemberHistoryById(){
+
+    }
 }
