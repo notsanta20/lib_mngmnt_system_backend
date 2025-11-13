@@ -1,29 +1,22 @@
 package com.santa.auth_service.service;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private final String secretKey;
+    private String secretKey = "6f8ee1551b04bcb74ad883736ecf7322993c09392ee9652013dd56859dab1a63";
     private final SecretKey secret;
 
     public JwtService(){
-        Dotenv dotenv = Dotenv.load();
-        this.secretKey = dotenv.get("JWT_SECRET");
         this.secret = getKey();
-
     }
 
     private SecretKey getKey() {

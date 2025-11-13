@@ -1,6 +1,5 @@
 package com.santa.api_gateway.util;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -13,8 +12,7 @@ public class JwtUtil {
     public static String SECRET;
 
     public JwtUtil() {
-        Dotenv dotenv = Dotenv.load();
-        SECRET = dotenv.get("JWT_SECRET");
+        SECRET = "6f8ee1551b04bcb74ad883736ecf7322993c09392ee9652013dd56859dab1a63";
     }
 
     public void validateToken(final String token) {
