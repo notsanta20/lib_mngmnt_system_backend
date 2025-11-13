@@ -21,13 +21,13 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> getUsers(@RequestBody UserRegisterDTO user) {
+    public ResponseEntity<UserDTO> registerUser(@RequestBody UserRegisterDTO user) {
         UserDTO newUser = service.registerUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> getUserByUsername(@RequestBody UserLoginDTO user){
+    public ResponseEntity<String> loginUser(@RequestBody UserLoginDTO user){
         String token = service.loginUser(user);
 
         if(token.equals("false")){

@@ -1,6 +1,5 @@
 package com.santa.auth_service.service;
 
-import com.santa.auth_service.dto.MemberDTO;
 import com.santa.auth_service.dto.UserDTO;
 import com.santa.auth_service.dto.UserLoginDTO;
 import com.santa.auth_service.dto.UserRegisterDTO;

@@ -11,30 +11,39 @@ spring:
           discovery:
             locator:
               enabled: true
+
       routes:
         - id: book-service
           uri: lb://BOOK-SERVICE
           predicates:
             - Path=/api/books/**
+          filters:
+            - AuthenticationFilter
 
         - id: member-service
           uri: lb://MEMBER-SERVICE
           predicates:
             - Path=/api/members/**
+          filters:
+            - AuthenticationFilter
 
         - id: transaction-service
           uri: lb://TRANSACTION-SERVICE
           predicates:
             - Path=/api/transactions/**
+          filters:
+            - AuthenticationFilter
 
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/api/auth/**
+          filters:
+            - AuthenticationFilter
 
 
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://host.docker.internal:8761/eureka/
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://host.docker.internal:8761/eureka/

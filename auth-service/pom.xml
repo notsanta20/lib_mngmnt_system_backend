@@ -99,7 +99,8 @@
             <version>0.13.0</version>
             <scope>runtime</scope>
         </dependency>
-	</dependencies>
+
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>

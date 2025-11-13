@@ -2,8 +2,8 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_USER: santhosh
-      POSTGRES_PASSWORD: saiviyan
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5433:5432"
     volumes:
@@ -25,6 +25,13 @@ services:
     networks:
       - lib-network
 
+  auth-service:
+    build: auth-service/
+    ports:
+      - "8084:8084"
+    networks:
+      - lib-network
+
   book-service:
     build: book-service/
     ports:
@@ -43,13 +50,6 @@ services:
     build: transaction-service/
     ports:
       - "8083:8083"
-    networks:
-      - lib-network
-
-  auth-service:
-    build: auth-service/
-    ports:
-      - "8084:8084"
     networks:
       - lib-network
 
