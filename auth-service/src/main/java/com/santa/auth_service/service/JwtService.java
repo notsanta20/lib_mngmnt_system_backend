@@ -1,5 +1,6 @@
 package com.santa.auth_service.service;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -15,26 +16,15 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-
     private final String secretKey;
     private final SecretKey secret;
 
     public JwtService(){
-        this.secretKey = generateSecretKey();
+        Dotenv dotenv = Dotenv.load();
+        this.secretKey = dotenv.get("JWT_SECRET");
         this.secret = getKey();
-    }
 
-    public String generateSecretKey() {
-        try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey secretKey = keyGen.generateKey();
-            System.out.println("Secret Key : " + secretKey.toString());
-            return Base64.getEncoder().encodeToString(secretKey.getEncoded());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error generating secret key", e);
-        }
     }
-
 
     private SecretKey getKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -69,9 +59,12 @@ public class JwtService {
     }
 
 
-    public boolean validateToken(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public boolean validateToken(String token) {
+            Jwts.parser()
+                    .verifyWith(getKey())
+                    .build()
+                    .parseSignedClaims(token);
+            return !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
